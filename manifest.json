@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Edge 页面美化 · 液态玻璃",
   "short_name": "Edge页面美化",
-  "version": "1.2.2",
+  "version": "1.2.4",
   "description": "Edge 页面美化：给必应搜索页和新标签页换上液态玻璃、流动极光和自定义背景（Manifest V3 扩展）。",
   "icons": {
     "16": "icons/icon16.png",

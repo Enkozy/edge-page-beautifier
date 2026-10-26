@@ -260,6 +260,24 @@ html.lg-on #b_header {
   box-shadow: 0 14px 36px -26px rgba(16, 32, 64, .60) !important;
 }
 
+/* 建议展开时，头部 + 下拉必须盖在结果卡片之上，而不是被结果压住 */
+html.lg-on body.as_on:not(.b_pinhead) #b_header {
+  position: relative !important;
+  z-index: 900 !important;
+}
+
+html.lg-on body.b_pinhead #b_header {
+  z-index: 900 !important;
+}
+
+html.lg-on #sw_as {
+  z-index: 950 !important;
+}
+
+html.lg-on .sa_as {
+  z-index: 960 !important;
+}
+
 /* 滚动后必应会给固定头强制白底（.b_pinhead ... !important），这里用更高权重压回去 */
 html.lg-on body #b_header[role="banner"] {
   background-color: rgba(var(--lg-rgb), var(--lg-bar-a)) !important;
@@ -331,15 +349,32 @@ html.lg-on #sb_form:has(.b_searchboxForm) {
   backdrop-filter: none !important;
 }
 
+/* 去掉点击搜索框后的蓝色方框/焦点环 */
+html.lg-on #sb_form,
+html.lg-on #sb_form:focus,
+html.lg-on #sb_form:focus-within,
+html.lg-on #sb_form_q,
+html.lg-on #sb_form_q:focus,
+html.lg-on #sb_form_q:focus-visible,
+html.lg-on .b_searchboxForm,
+html.lg-on .b_searchboxForm:focus,
+html.lg-on .b_searchboxForm:focus-within {
+  outline: none !important;
+  outline-offset: 0 !important;
+}
+
+html.lg-on #sb_form_q:focus {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
 html.lg-on #b_header .b_searchboxForm:focus-within,
 html.lg-on #sb_form .b_searchboxForm:focus-within,
 html.lg-on .b_searchboxForm:focus-within,
 html.lg-on #sb_form:not(:has(.b_searchboxForm)):focus-within {
   transform: translateY(-1px);
-  box-shadow:
-    0 0 0 4px rgba(122, 166, 255, .26),
-    var(--lg-shadow),
-    var(--lg-inset) !important;
+  border-color: var(--lg-line) !important;
+  box-shadow: var(--lg-shadow), var(--lg-inset) !important;
 }
 
 html.lg-on #sb_form_q {

@@ -34,12 +34,12 @@ Manifest V3，无需构建，直接加载。
 
 ## 下载安装
 
-1. 从 [Releases](https://github.com/Enkozy/edge-page-beautifier/releases/latest) 下载 `edge-page-beautifier-v1.2.2.zip`。
-2. 解压到一个固定文件夹，例如 `D:\Extensions\edge-page-beautifier-v1.2.2`。
+1. 从 [Releases](https://github.com/Enkozy/edge-page-beautifier/releases/latest) 下载 `edge-page-beautifier-v1.2.4.zip`。
+2. 解压到一个固定文件夹，例如 `D:\Extensions\edge-page-beautifier-v1.2.4`。
    > 不要直接在压缩包里运行；装好后不要删除或移动这个文件夹。
 3. 打开 Edge，地址栏输入 `edge://extensions/`。
 4. 打开左下角的 **开发人员模式**。
-5. 点 **加载解压缩的扩展**，选择解压后的 `edge-page-beautifier-v1.2.2` 文件夹。
+5. 点 **加载解压缩的扩展**，选择解压后的 `edge-page-beautifier-v1.2.4` 文件夹。
    文件夹里应该能直接看到 `manifest.json`，不要选它的上一层。
 6. 建议点扩展栏的拼图图标，把「Edge 页面美化」固定到工具栏。
 7. 打开 [cn.bing.com](https://cn.bing.com/) 搜索，或按 `Ctrl+T` 看新标签页。
@@ -101,7 +101,7 @@ Manifest V3，无需构建，直接加载。
 说明那个站点根目录没有可访问的 favicon。欢迎提 [Issue](https://github.com/Enkozy/edge-page-beautifier/issues) 并附上域名。
 
 **上传图片没反应？**
-- 确认扩展版本是 1.2.2，并且在 `edge://extensions/` 点过「重新加载」；
+- 确认扩展版本是 1.2.4，并且在 `edge://extensions/` 点过「重新加载」；
 - 选图后要等裁剪框出现，再点 **使用这张**；
 - HEIC 先转 JPG；
 - 设置页会显示红色错误原因。
