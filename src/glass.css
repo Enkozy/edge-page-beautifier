@@ -12,7 +12,7 @@ html.lg-on {
   --lg-contrast: 50;
   --lg-card-a: calc(var(--lg-a) + .16 + var(--lg-contrast) * .0016);
   --lg-bar-a: calc(var(--lg-a) + .06);
-  --lg-input-a: calc(var(--lg-a) + .38);
+  --lg-input-a: calc(var(--lg-a) + .44);
   --lg-halo: 255, 255, 255;
   --lg-halo-a: calc(var(--lg-contrast) * .004);
   --lg-halo-blur: calc(var(--lg-contrast) * .03px);
@@ -270,6 +270,29 @@ html.lg-on #b_header span {
   color: var(--lg-ink);
 }
 
+/* 国内版 / 国际版：active 是白底蓝字，在玻璃头上会发虚 */
+html.lg-on #est_switch {
+  z-index: 30 !important;
+}
+
+html.lg-on #est_cn,
+html.lg-on #est_en {
+  color: var(--lg-ink) !important;
+}
+
+html.lg-on #est_cn.est_selected,
+html.lg-on #est_en.est_selected {
+  background: rgba(var(--lg-rgb), .95) !important;
+  border: 1px solid var(--lg-line) !important;
+  border-radius: 999px !important;
+  color: var(--lg-ink) !important;
+}
+
+html.lg-on #est_switch .est_selected::before,
+html.lg-on #est_switch .est_selected::after {
+  background: rgba(var(--lg-rgb), .95) !important;
+}
+
 /* ------------------------------ 搜索框 ------------------------------ */
 html.lg-on #b_header .b_searchboxForm,
 html.lg-on #sb_form .b_searchboxForm,
@@ -290,10 +313,12 @@ html.lg-on #sb_form:not(:has(.b_searchboxForm)):not(.b_searchboxForm *) {
 
 /* 建议面板打开时，搜索框再实一点，避免文字和下拉都透 */
 html.lg-on body.as_on .b_searchboxForm,
+html.lg-on.as_on .b_searchboxForm,
 html.lg-on .as_on .b_searchboxForm,
 html.lg-on #b_header.as_on .b_searchboxForm,
+html.lg-on #sb_form.as_on .b_searchboxForm,
 html.lg-on body.as_on #sb_form:not(:has(.b_searchboxForm)) {
-  background-color: rgba(var(--lg-rgb), .95) !important;
+  background-color: rgba(var(--lg-rgb), .97) !important;
 }
 
 /* 表单只是外壳时，把外壳让出来，只保留里面那颗玻璃胶囊 */
@@ -344,7 +369,7 @@ html.lg-on #b_icon_spyglass {
 
 /* 搜索建议下拉：接近实底，避免结果文字透上来 */
 html.lg-on .sa_as {
-  background: rgba(var(--lg-rgb), .965) !important;
+  background: rgba(var(--lg-rgb), .985) !important;
   -webkit-backdrop-filter: blur(28px) saturate(165%) !important;
   backdrop-filter: blur(28px) saturate(165%) !important;
   border: 1px solid var(--lg-line) !important;
@@ -353,8 +378,31 @@ html.lg-on .sa_as {
     0 28px 64px -24px rgba(10, 20, 40, .65),
     0 2px 8px rgba(10, 20, 40, .15) !important;
   margin-top: 8px;
-  overflow: hidden;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  overscroll-behavior: contain;
+  max-height: min(72vh, 560px);
   color: var(--lg-ink) !important;
+}
+
+/* 建议面板内部的白底药丸/行一律透出面板底色，文字统一用 ink */
+html.lg-on .sa_as * {
+  background-color: transparent !important;
+  color: var(--lg-ink) !important;
+  border-color: var(--lg-line) !important;
+  box-shadow: none !important;
+}
+
+/* 右侧那列本身要有底，避免它高出面板时露出后面的结果 */
+html.lg-on .sa_as > div,
+html.lg-on .sa_as > ul {
+  background-color: rgba(var(--lg-rgb), .985) !important;
+}
+
+html.lg-on .sa_as .sa_hv,
+html.lg-on .sa_as .sa_drw:hover,
+html.lg-on .sa_as .sa_drw.sa_hover {
+  background-color: rgba(var(--lg-rgb), .88) !important;
 }
 
 /* 必应给每一行单独刷了白底，这里让行透明，露出玻璃 */
@@ -364,7 +412,7 @@ html.lg-on .sa_as .sa_drw {
 
 html.lg-on .sa_as .sa_drw:hover,
 html.lg-on .sa_as .sa_drw.sa_hover {
-  background: rgba(var(--lg-rgb), .42) !important;
+  background-color: rgba(var(--lg-rgb), .88) !important;
 }
 
 html.lg-on .sa_as .sa_sg,
