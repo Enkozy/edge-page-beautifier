@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>必应液态玻璃</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="app">
+    <header class="head">
+      <img class="logo" src="icons/icon48.png" alt="">
+      <div class="titles">
+        <h1>液态玻璃</h1>
+        <p>Bing Liquid Glass</p>
+      </div>
+      <span class="ver" id="ver">v1.0.0</span>
+    </header>
+
+    <section class="row">
+      <div class="row-text">
+        <span>启用效果</span>
+        <small>作用于 bing.com 搜索页</small>
+      </div>
+      <label class="switch"><input id="enabled" type="checkbox"><i></i></label>
+    </section>
+
+    <section class="field">
+      <div class="label"><span>主题</span></div>
+      <div class="seg" id="theme" role="group" aria-label="主题">
+        <button type="button" data-theme="auto" aria-pressed="true">自动</button>
+        <button type="button" data-theme="light" aria-pressed="false">浅色</button>
+        <button type="button" data-theme="dark" aria-pressed="false">深色</button>
+      </div>
+    </section>
+
+    <section class="field">
+      <div class="label"><span>模糊强度</span><b id="blurOut">26px</b></div>
+      <input type="range" id="blur" min="0" max="48" step="1" aria-label="模糊强度">
+    </section>
+
+    <section class="field">
+      <div class="label"><span>玻璃通透</span><b id="alphaOut">46%</b></div>
+      <input type="range" id="alpha" min="10" max="80" step="1" aria-label="玻璃通透度">
+    </section>
+
+    <section class="row">
+      <div class="row-text">
+        <span>鼠标高光</span>
+        <small>卡片跟随指针的高光</small>
+      </div>
+      <label class="switch"><input id="specular" type="checkbox"><i></i></label>
+    </section>
+
+    <button class="more" id="more" type="button">
+      <span>背景裁剪 / 更多设置</span>
+      <span aria-hidden="true">→</span>
+    </button>
+
+    <footer class="foot">
+      <span>页面右下角 <b>水滴</b> 打开完整面板</span>
+      <button id="reset" type="button">恢复默认</button>
+    </footer>
+  </main>
+
+  <script src="src/settings.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

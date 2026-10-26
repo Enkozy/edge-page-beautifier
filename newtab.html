@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9eefb">
+  <title>新标签页 · 液态玻璃</title>
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+  <div class="bg" aria-hidden="true">
+    <div class="photo" id="photo"></div>
+    <div class="aurora" id="aurora">
+      <i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i>
+    </div>
+    <div class="scrim"></div>
+    <div class="grain"></div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand glass">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <defs>
+          <linearGradient id="lgBrandDrop" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#eaf2ff"></stop>
+            <stop offset=".45" stop-color="#a9c8ff"></stop>
+            <stop offset="1" stop-color="#c3a7ff"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M12 2.4c3.9 4.6 6.6 7.7 6.6 11.2a6.6 6.6 0 1 1-13.2 0C5.4 10.1 8.1 7 12 2.4Z"
+              fill="url(#lgBrandDrop)" stroke="rgba(255,255,255,.75)" stroke-width=".7"></path>
+      </svg>
+      <span>Bing</span>
+    </div>
+
+    <div class="top-right">
+      <div class="clock glass">
+        <b id="clock">--:--</b>
+        <span id="date"></span>
+      </div>
+      <button class="icon-btn glass" id="refresh" type="button" title="换一张必应壁纸" aria-label="换一张必应壁纸">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 11.5a8 8 0 1 1-1.2-4.3"></path>
+          <path d="M20 4v5.5h-5.5"></path>
+        </svg>
+      </button>
+      <button class="icon-btn glass" id="settings" type="button" title="液态玻璃设置" aria-label="液态玻璃设置">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 7h8M17 7h3M4 12h3M11 12h9M4 17h11M19 17h1"></path>
+          <circle cx="14.5" cy="7" r="2.2"></circle>
+          <circle cx="8.5" cy="12" r="2.2"></circle>
+          <circle cx="17" cy="17" r="2.2"></circle>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="stage">
+    <h1 class="sr-only">新标签页</h1>
+
+    <form class="search glass" id="searchForm" action="https://cn.bing.com/search" method="get" role="search">
+      <svg class="search-ico" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="6.5"></circle>
+        <path d="m16 16 4.5 4.5"></path>
+      </svg>
+      <input id="q" name="q" type="search" placeholder="搜索网页" autocomplete="off" spellcheck="false" autofocus>
+      <button class="go" type="submit" aria-label="搜索">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m9 6 6 6-6 6"></path>
+        </svg>
+      </button>
+    </form>
+
+    <nav class="quick" id="quick" aria-label="快捷网站"></nav>
+
+    <div class="quick-actions">
+      <button class="qa" id="addSite" type="button"><span class="qa-plus">+</span>添加快捷</button>
+      <button class="qa" id="restoreSites" type="button" title="读取浏览器最常访问的网站，只在本机使用">恢复常用网站</button>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <footer class="foot">
+    <span id="wallInfo">必应每日壁纸</span>
+    <span class="dot">·</span>
+    <button class="text-btn" id="bgBtn" type="button">换背景 / 裁剪</button>
+  </footer>
+
+  <div class="dialog" id="dialog" hidden>
+    <form class="dialog-card glass" id="addForm" autocomplete="off">
+      <h2>添加快捷网站</h2>
+      <label>名称<input id="siteName" maxlength="16" placeholder="例如：B站"></label>
+      <label>网址<input id="siteUrl" maxlength="500" placeholder="https://www.bilibili.com" inputmode="url"></label>
+      <p class="dialog-error" id="dialogError" role="alert"></p>
+      <div class="dialog-actions">
+        <button class="text-btn" id="cancelAdd" type="button">取消</button>
+        <button class="primary-btn" type="submit">添加</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="src/settings.js"></script>
+  <script src="newtab.js"></script>
+</body>
+</html>

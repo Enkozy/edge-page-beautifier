@@ -1,0 +1,693 @@
+/* ==========================================================================
+   Bing Liquid Glass · 必应液态玻璃
+   --------------------------------------------------------------------------
+   所有规则都限定在 html.lg-on 之下：关闭插件时对页面零影响。
+   想换配色，改下面的设计变量即可（深色变量在 [data-lg-theme="dark"] 里）。
+   ========================================================================== */
+
+/* ------------------------------ 设计变量 ------------------------------ */
+html.lg-on {
+  --lg-blur: 26px;
+  --lg-a: .46;
+  --lg-card-a: calc(var(--lg-a) + .16);
+  --lg-bar-a: calc(var(--lg-a) + .06);
+
+  --lg-rgb: 255, 255, 255;
+  --lg-ink: #101828;
+  --lg-muted: #44526b;
+  --lg-link: #164bc9;
+  --lg-url: #0a7d5c;
+
+  --lg-line: rgba(255, 255, 255, .62);
+  --lg-line-soft: rgba(255, 255, 255, .30);
+  --lg-inset:
+    inset 0 1px 0 rgba(255, 255, 255, .92),
+    inset 0 -1px 0 rgba(255, 255, 255, .22),
+    inset 0 0 26px rgba(255, 255, 255, .10);
+  --lg-shadow:
+    0 16px 44px -20px rgba(20, 36, 72, .42),
+    0 2px 8px rgba(20, 36, 72, .07);
+  --lg-shadow-hover:
+    0 26px 60px -24px rgba(20, 36, 72, .50),
+    0 6px 18px rgba(20, 36, 72, .10);
+
+  --lg-page: #e9eefb;
+  --lg-scrim: .32;
+  --lg-bg-blur: 0px;
+
+  color-scheme: light;
+  scrollbar-color: rgba(108, 128, 168, .45) transparent;
+}
+
+html.lg-on[data-lg-theme="dark"] {
+  --lg-rgb: 12, 16, 26;
+  --lg-ink: #eaf0ff;
+  --lg-muted: #aebbd3;
+  --lg-link: #a9c8ff;
+  --lg-url: #7dddba;
+
+  --lg-line: rgba(255, 255, 255, .16);
+  --lg-line-soft: rgba(255, 255, 255, .10);
+  --lg-inset:
+    inset 0 1px 0 rgba(255, 255, 255, .20),
+    inset 0 -1px 0 rgba(0, 0, 0, .45),
+    inset 0 0 30px rgba(255, 255, 255, .04);
+  --lg-shadow:
+    0 20px 56px -22px rgba(0, 0, 0, .90),
+    0 2px 10px rgba(0, 0, 0, .55);
+  --lg-shadow-hover:
+    0 30px 76px -26px rgba(0, 0, 0, .95),
+    0 8px 22px rgba(0, 0, 0, .60);
+
+  --lg-page: #06080f;
+
+  color-scheme: dark;
+  scrollbar-color: rgba(150, 170, 210, .38) transparent;
+}
+
+/* 关闭时不渲染背景层，避免空转 */
+html.lg-on[data-lg-aurora="1"] {
+  background: var(--lg-page) !important;
+}
+
+html.lg-on[data-lg-aurora="1"] body {
+  background: transparent !important;
+}
+
+/* ------------------------------ 极光背景 ------------------------------ */
+#lg-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--lg-page);
+}
+
+html.lg-on[data-lg-aurora="1"] #lg-bg {
+  display: block;
+}
+
+#lg-bg .lg-blob {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+#lg-bg .blob-a {
+  width: 72vmax;
+  height: 72vmax;
+  top: -30vmax;
+  left: -20vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(120, 164, 255, .58), rgba(120, 164, 255, 0) 62%);
+  animation: lg-drift-a 38s ease-in-out infinite alternate;
+}
+
+#lg-bg .blob-b {
+  width: 62vmax;
+  height: 62vmax;
+  top: -14vmax;
+  right: -22vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(190, 146, 255, .52), rgba(190, 146, 255, 0) 64%);
+  animation: lg-drift-b 46s ease-in-out infinite alternate;
+}
+
+#lg-bg .blob-c {
+  width: 68vmax;
+  height: 68vmax;
+  bottom: -32vmax;
+  left: 4vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 158, 200, .44), rgba(255, 158, 200, 0) 64%);
+  animation: lg-drift-c 52s ease-in-out infinite alternate;
+}
+
+#lg-bg .blob-d {
+  width: 48vmax;
+  height: 48vmax;
+  right: 2vmax;
+  bottom: -16vmax;
+  background: radial-gradient(circle at 50% 50%, rgba(120, 238, 214, .38), rgba(120, 238, 214, 0) 62%);
+  animation: lg-drift-d 44s ease-in-out infinite alternate;
+}
+
+html.lg-on[data-lg-theme="dark"] #lg-bg .blob-a {
+  background: radial-gradient(circle at 50% 50%, rgba(54, 96, 255, .46), rgba(54, 96, 255, 0) 62%);
+}
+html.lg-on[data-lg-theme="dark"] #lg-bg .blob-b {
+  background: radial-gradient(circle at 50% 50%, rgba(140, 70, 255, .40), rgba(140, 70, 255, 0) 64%);
+}
+html.lg-on[data-lg-theme="dark"] #lg-bg .blob-c {
+  background: radial-gradient(circle at 50% 50%, rgba(255, 64, 140, .26), rgba(255, 64, 140, 0) 64%);
+}
+html.lg-on[data-lg-theme="dark"] #lg-bg .blob-d {
+  background: radial-gradient(circle at 50% 50%, rgba(0, 210, 180, .22), rgba(0, 210, 180, 0) 62%);
+}
+
+#lg-bg .lg-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 255, 255, 0) 34%, rgba(233, 238, 251, .52) 100%),
+    linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(233, 238, 251, .34));
+}
+
+html.lg-on[data-lg-theme="dark"] #lg-bg .lg-veil {
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(4, 6, 12, 0) 30%, rgba(4, 6, 12, .74) 100%),
+    linear-gradient(180deg, rgba(4, 6, 12, .10), rgba(4, 6, 12, .52));
+}
+
+#lg-bg .lg-noise {
+  position: absolute;
+  inset: 0;
+  opacity: .05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ------------------------------ 自定义背景 ------------------------------ */
+#lg-bg .lg-photo {
+  position: absolute;
+  inset: -4%;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(1.03);
+  filter: blur(var(--lg-bg-blur, 0px));
+  transition: opacity .5s ease;
+  will-change: opacity;
+}
+
+html.lg-on[data-lg-bg="custom"] #lg-bg .lg-photo {
+  opacity: 1;
+}
+
+html.lg-on[data-lg-bg="custom"] #lg-bg .lg-blob {
+  opacity: 0;
+  animation-play-state: paused;
+}
+
+#lg-bg .lg-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(var(--lg-rgb), calc(var(--lg-scrim, .32) * .50)) 0%,
+    rgba(var(--lg-rgb), var(--lg-scrim, .32)) 62%,
+    rgba(var(--lg-rgb), calc(var(--lg-scrim, .32) * 1.15)) 100%);
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+html.lg-on[data-lg-bg="custom"] #lg-bg .lg-scrim {
+  opacity: 1;
+}
+
+html.lg-on[data-lg-bg="custom"] #lg-bg .lg-veil {
+  opacity: 0;
+}
+
+@keyframes lg-drift-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(7vmax, 5vmax, 0) scale(1.12); }
+}
+@keyframes lg-drift-b {
+  from { transform: translate3d(0, 0, 0) scale(1.05); }
+  to   { transform: translate3d(-6vmax, 7vmax, 0) scale(.94); }
+}
+@keyframes lg-drift-c {
+  from { transform: translate3d(0, 0, 0) scale(.96); }
+  to   { transform: translate3d(8vmax, -5vmax, 0) scale(1.1); }
+}
+@keyframes lg-drift-d {
+  from { transform: translate3d(0, 0, 0) scale(1.08); }
+  to   { transform: translate3d(-8vmax, -4vmax, 0) scale(.92); }
+}
+
+/* 极光模式下隐藏必应自带壁纸，避免两层背景打架（只动纯壁纸层） */
+html.lg-on[data-lg-aurora="1"] #bg {
+  display: none !important;
+}
+
+/* ------------------------------ 页面骨架 ------------------------------ */
+html.lg-on body {
+  color: var(--lg-ink) !important;
+  background-attachment: fixed;
+}
+
+html.lg-on[data-lg-aurora="1"] #b_content,
+html.lg-on[data-lg-aurora="1"] #b_results,
+html.lg-on[data-lg-aurora="1"] #b_context,
+html.lg-on[data-lg-aurora="1"] main {
+  background: transparent !important;
+}
+
+/* ------------------------------ 顶部栏 ------------------------------ */
+html.lg-on #b_header {
+  background: rgba(var(--lg-rgb), var(--lg-bar-a)) !important;
+  -webkit-backdrop-filter: blur(calc(var(--lg-blur) * .85)) saturate(180%) !important;
+  backdrop-filter: blur(calc(var(--lg-blur) * .85)) saturate(180%) !important;
+  border-bottom: 1px solid var(--lg-line-soft) !important;
+  box-shadow: 0 14px 36px -26px rgba(16, 32, 64, .60) !important;
+}
+
+/* 滚动后必应会给固定头强制白底（.b_pinhead ... !important），这里用更高权重压回去 */
+html.lg-on body #b_header[role="banner"] {
+  background-color: rgba(var(--lg-rgb), var(--lg-bar-a)) !important;
+}
+
+html.lg-on #b_header a,
+html.lg-on #b_header span {
+  color: var(--lg-ink);
+}
+
+/* ------------------------------ 搜索框 ------------------------------ */
+html.lg-on #b_header .b_searchboxForm,
+html.lg-on #sb_form .b_searchboxForm,
+html.lg-on .b_searchboxForm,
+html.lg-on #sb_form:not(:has(.b_searchboxForm)):not(.b_searchboxForm *) {
+  background-color: rgba(var(--lg-rgb), var(--lg-bar-a)) !important;
+  background-image:
+    linear-gradient(145deg, rgba(255, 255, 255, .32), rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, .14)) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(190%) !important;
+  backdrop-filter: blur(var(--lg-blur)) saturate(190%) !important;
+  border: 1px solid var(--lg-line) !important;
+  border-radius: 999px !important;
+  box-sizing: border-box !important;
+  box-shadow: var(--lg-shadow), var(--lg-inset) !important;
+  transition: box-shadow .28s ease, transform .28s ease, background-color .28s ease;
+}
+
+/* 表单只是外壳时，把外壳让出来，只保留里面那颗玻璃胶囊 */
+html.lg-on #sb_form:has(.b_searchboxForm) {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html.lg-on #b_header .b_searchboxForm:focus-within,
+html.lg-on #sb_form .b_searchboxForm:focus-within,
+html.lg-on .b_searchboxForm:focus-within,
+html.lg-on #sb_form:not(:has(.b_searchboxForm)):focus-within {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(122, 166, 255, .26),
+    var(--lg-shadow),
+    var(--lg-inset) !important;
+}
+
+html.lg-on #sb_form_q {
+  background: transparent !important;
+  color: var(--lg-ink) !important;
+  caret-color: #4f8dff;
+}
+
+html.lg-on #sb_form_q::placeholder {
+  color: var(--lg-muted) !important;
+  opacity: .85;
+}
+
+html.lg-on #search_icon {
+  transition: transform .2s ease;
+}
+
+html.lg-on #search_icon:hover,
+html.lg-on #sb_form_go:hover #b_icon_spyglass {
+  transform: scale(1.08);
+}
+
+html.lg-on #sb_form_go,
+html.lg-on #b_icon_spyglass {
+  transition: transform .2s ease;
+}
+
+/* 搜索建议下拉 */
+html.lg-on .sa_as {
+  background: rgba(var(--lg-rgb), calc(var(--lg-a) + .28)) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(180%) !important;
+  backdrop-filter: blur(var(--lg-blur)) saturate(180%) !important;
+  border: 1px solid var(--lg-line) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--lg-shadow) !important;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+/* 必应给每一行单独刷了白底，这里让行透明，露出玻璃 */
+html.lg-on .sa_as .sa_drw {
+  background: transparent !important;
+}
+
+html.lg-on .sa_as .sa_drw:hover,
+html.lg-on .sa_as .sa_drw.sa_hover {
+  background: rgba(var(--lg-rgb), .42) !important;
+}
+
+html.lg-on .sa_as .sa_sg,
+html.lg-on .sa_as .sa_hdr {
+  color: var(--lg-ink) !important;
+}
+
+/* ------------------------------ 结果卡片 ------------------------------ */
+html.lg-on #b_results > li.b_algo,
+html.lg-on #b_results > li.b_ad {
+  position: relative;
+  margin: 12px 0 !important;
+  padding: 16px 20px 18px !important;
+  border-radius: 22px !important;
+  border: 1px solid var(--lg-line) !important;
+  background-color: rgba(var(--lg-rgb), var(--lg-card-a)) !important;
+  background-image:
+    radial-gradient(560px circle at var(--lg-mx, 50%) var(--lg-my, 0px), rgba(255, 255, 255, var(--lg-lit, 0)) 0%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(150deg, rgba(255, 255, 255, .30), rgba(255, 255, 255, 0) 46%, rgba(255, 255, 255, .12)) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(175%) !important;
+  backdrop-filter: blur(var(--lg-blur)) saturate(175%) !important;
+  box-shadow: var(--lg-shadow), var(--lg-inset) !important;
+  transition:
+    transform .30s cubic-bezier(.2, .7, .25, 1),
+    box-shadow .30s ease,
+    background-color .30s ease;
+}
+
+html.lg-on #b_results > li.b_algo:hover,
+html.lg-on #b_results > li.b_ad:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--lg-shadow-hover), var(--lg-inset) !important;
+}
+
+html.lg-on #b_results > li.b_algo.lg-lit,
+html.lg-on #b_results > li.b_ad.lg-lit {
+  box-shadow: var(--lg-shadow-hover), var(--lg-inset) !important;
+}
+
+/* 标题与摘要排版 */
+html.lg-on #b_results .b_algo h2,
+html.lg-on #b_results .b_algo .b_title {
+  font-size: 20px !important;
+  line-height: 1.42 !important;
+  font-weight: 600 !important;
+  margin: 0 0 6px !important;
+}
+
+html.lg-on #b_results .b_algo h2 a {
+  color: var(--lg-link) !important;
+  text-decoration: none !important;
+}
+
+html.lg-on #b_results .b_algo h2 a:hover {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+html.lg-on #b_results .b_caption p,
+html.lg-on #b_results .b_snippet {
+  color: var(--lg-muted) !important;
+  font-size: 14.5px !important;
+  line-height: 1.74 !important;
+}
+
+html.lg-on #b_results cite,
+html.lg-on #b_results .b_attribution cite {
+  color: var(--lg-url) !important;
+  font-style: normal !important;
+}
+
+html.lg-on #b_results .b_attribution {
+  font-size: 12.5px !important;
+  color: var(--lg-muted) !important;
+}
+
+html.lg-on #b_results .sb_count {
+  color: var(--lg-muted) !important;
+}
+
+/* ------------------------------ 右侧栏 ------------------------------ */
+html.lg-on #b_context > * {
+  border-radius: 20px !important;
+  border: 1px solid var(--lg-line) !important;
+  background-color: rgba(var(--lg-rgb), var(--lg-card-a)) !important;
+  background-image:
+    radial-gradient(420px circle at var(--lg-mx, 50%) var(--lg-my, 0px), rgba(255, 255, 255, var(--lg-lit, 0)) 0%, rgba(255, 255, 255, 0) 60%),
+    linear-gradient(150deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, 0) 48%, rgba(255, 255, 255, .10)) !important;
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(170%) !important;
+  backdrop-filter: blur(var(--lg-blur)) saturate(170%) !important;
+  box-shadow: var(--lg-shadow), var(--lg-inset) !important;
+  overflow: hidden;
+  margin-bottom: 12px !important;
+}
+
+/* 避免内外两层重复磨砂 */
+html.lg-on #b_context > * .b_ans {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ------------------------------ 分页 / 页脚 ------------------------------ */
+html.lg-on #b_results > li.b_pag,
+html.lg-on .b_pag {
+  background: rgba(var(--lg-rgb), var(--lg-bar-a)) !important;
+  border: 1px solid var(--lg-line) !important;
+  border-radius: 18px !important;
+  -webkit-backdrop-filter: blur(calc(var(--lg-blur) * .8)) saturate(170%) !important;
+  backdrop-filter: blur(calc(var(--lg-blur) * .8)) saturate(170%) !important;
+  box-shadow: var(--lg-shadow), var(--lg-inset) !important;
+  padding: 10px 16px !important;
+  margin: 18px 0 !important;
+}
+
+html.lg-on .b_pag a {
+  border-radius: 10px !important;
+  padding: 3px 6px;
+}
+
+html.lg-on #b_footer {
+  background: transparent !important;
+  border-top: 1px solid var(--lg-line-soft) !important;
+  color: var(--lg-muted) !important;
+}
+
+html.lg-on #b_footer a,
+html.lg-on #b_footer span {
+  color: var(--lg-muted) !important;
+}
+
+/* ------------------------------ 深色主题文字兜底 ------------------------------ */
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo {
+  color: #c6d2e8;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo a {
+  color: var(--lg-link);
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo h2 a {
+  color: var(--lg-link) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo h2 a:visited {
+  color: #c9b8ff !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .b_caption p,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .b_snippet,
+html.lg-on[data-lg-theme="dark"] #b_context {
+  color: var(--lg-muted) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_context a {
+  color: var(--lg-link);
+}
+
+html.lg-on[data-lg-theme="dark"] #b_header,
+html.lg-on[data-lg-theme="dark"] #b_header a,
+html.lg-on[data-lg-theme="dark"] #b_header span,
+html.lg-on[data-lg-theme="dark"] #b_header div {
+  color: var(--lg-ink) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results cite,
+html.lg-on[data-lg-theme="dark"] cite {
+  color: var(--lg-url) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_content {
+  color: #d9e2f2;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_tween,
+html.lg-on[data-lg-theme="dark"] #b_tween a,
+html.lg-on[data-lg-theme="dark"] #b_tween span,
+html.lg-on[data-lg-theme="dark"] .sb_count,
+html.lg-on[data-lg-theme="dark"] #b_context {
+  color: var(--lg-muted) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] .b_pag a {
+  color: var(--lg-ink) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] .sb_pagS_bp {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, .18) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] .sb_form_placeholder_query,
+html.lg-on[data-lg-theme="dark"] #sb_form_c {
+  color: var(--lg-muted) !important;
+}
+
+/* 结果卡片里必应写死的深灰字（站点名、面包屑、栏目名…） */
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo *:not(a):not(a *):not(cite):not(cite *):not(svg):not(path) {
+  color: #d9e3f4 !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .tptt,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .tptt * {
+  color: #aebbd3 !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .tpmeta,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .tpmeta *:not(cite):not(cite *) {
+  color: #aebbd3 !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo a,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo a:visited {
+  color: var(--lg-link) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo h2 a,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo h2 a:visited,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .b_title a,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .b_title a:visited {
+  color: #bcd6ff !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo cite,
+html.lg-on[data-lg-theme="dark"] #b_results .b_algo .b_attribution cite {
+  color: var(--lg-url) !important;
+}
+
+/* 相关搜索 / 大家还在搜：整块都在玻璃上，可以整体提亮 */
+html.lg-on[data-lg-theme="dark"] #b_results .b_rs,
+html.lg-on[data-lg-theme="dark"] #b_results .b_rrsr,
+html.lg-on[data-lg-theme="dark"] #b_results .b_rs *:not(a):not(a *),
+html.lg-on[data-lg-theme="dark"] #b_results .b_rrsr *:not(a):not(a *) {
+  color: #d9e3f4 !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_rs a,
+html.lg-on[data-lg-theme="dark"] #b_results .b_rs a:visited,
+html.lg-on[data-lg-theme="dark"] #b_results .b_rrsr a,
+html.lg-on[data-lg-theme="dark"] #b_results .b_rrsr a:visited {
+  color: var(--lg-link) !important;
+}
+
+/* 答案模块标题：视频 / 其他用户还搜索过…（只动标题，不动白底缩略卡） */
+html.lg-on[data-lg-theme="dark"] #b_results .b_ans > h2,
+html.lg-on[data-lg-theme="dark"] #b_results .b_ans > h3,
+html.lg-on[data-lg-theme="dark"] #b_results .b_ans .b_ansTitle {
+  color: var(--lg-ink) !important;
+}
+
+html.lg-on[data-lg-theme="dark"] #b_results .b_vidAns .b_vidAnsTitle {
+  color: var(--lg-ink) !important;
+}
+
+/* 顶部频道条的选中下划线 */
+html.lg-on[data-lg-theme="dark"] .b_scopebar .b_active,
+html.lg-on[data-lg-theme="dark"] #b_header .b_scopebar .b_active {
+  border-color: #bcd6ff !important;
+}
+
+/* ------------------------------ 首页：只做玻璃、不挡壁纸 ------------------------------ */
+html.lg-on[data-lg-page="home"] #b_header {
+  background: rgba(var(--lg-rgb), .16) !important;
+  border-bottom-color: rgba(255, 255, 255, .18) !important;
+  box-shadow: none !important;
+}
+
+/* ------------------------------ 细节 ------------------------------ */
+html.lg-on ::selection {
+  background: rgba(110, 150, 255, .35);
+}
+
+html.lg-on :focus-visible {
+  outline: 2px solid rgba(90, 140, 255, .55);
+  outline-offset: 2px;
+}
+
+html.lg-on ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+html.lg-on ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html.lg-on ::-webkit-scrollbar-thumb {
+  background: rgba(108, 128, 168, .38);
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background-clip: content-box;
+}
+
+html.lg-on ::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 128, 168, .58);
+  background-clip: content-box;
+}
+
+/* 不支持 backdrop-filter 时，用更高的不透明度保证可读性 */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  html.lg-on {
+    --lg-a: .82;
+  }
+  html.lg-on #lg-bg {
+    display: none !important;
+  }
+}
+
+/* 动效敏感人群 */
+@media (prefers-reduced-motion: reduce) {
+  #lg-bg .lg-blob {
+    animation: none !important;
+  }
+  html.lg-on #b_results > li.b_algo,
+  html.lg-on #b_results > li.b_ad,
+  html.lg-on .b_searchboxForm {
+    transition: none !important;
+  }
+  html.lg-on #b_results > li.b_algo:hover,
+  html.lg-on #b_results > li.b_ad:hover {
+    transform: none;
+  }
+}
+
+/* 打印时还原干净页面 */
+@media print {
+  #lg-bg,
+  #lg-hud {
+    display: none !important;
+  }
+  html.lg-on,
+  html.lg-on body,
+  html.lg-on #b_content {
+    background: #fff !important;
+  }
+  html.lg-on #b_results > li.b_algo,
+  html.lg-on #b_results > li.b_ad {
+    background: #fff !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}

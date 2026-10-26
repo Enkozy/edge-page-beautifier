@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9eefb">
+  <title>液态玻璃 · 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="aurora" aria-hidden="true">
+    <i class="a1"></i><i class="a2"></i><i class="a3"></i><i class="a4"></i>
+    <span class="grain"></span>
+  </div>
+
+  <div class="page">
+    <header class="head">
+      <img class="logo" src="icons/icon48.png" alt="">
+      <div class="titles">
+        <h1>液态玻璃</h1>
+        <p>Bing Liquid Glass · 设置</p>
+      </div>
+      <span class="ver" id="ver">v1.1.5</span>
+    </header>
+
+    <main>
+      <div class="warn" id="ctxWarn" hidden>
+        <b>没有检测到扩展环境。</b> 你可能是直接双击打开了这个 HTML 文件。请从扩展的「背景裁剪 / 更多设置」进入，否则设置不会同步到必应页面。
+      </div>
+
+      <section class="card" id="background">
+        <div class="card-head">
+          <h2>自定义背景</h2>
+          <p>把喜欢的图裁成窗口比例，用作必应搜索页和新标签页的背景。</p>
+        </div>
+
+        <div class="bg-preview" id="bgPreview">
+          <img id="bgThumb" alt="当前背景预览">
+          <div class="bg-empty" id="bgEmpty">
+            <b>还没有自定义图片</b>
+            <small>支持 JPG / PNG / WebP，处理完只保存在本机</small>
+          </div>
+          <span class="bg-badge" id="bgBadge">当前：极光</span>
+          <span class="bg-size" id="bgSize"></span>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" id="pick" type="button">选择图片</button>
+          <button class="btn" id="crop" type="button" disabled>重新裁剪</button>
+          <button class="btn danger" id="clear" type="button" disabled>清除图片</button>
+        </div>
+
+        <p class="bg-error" id="bgError" role="alert" hidden></p>
+
+        <p class="hint">支持 JPG / PNG / WebP / GIF；也可以把图片拖进上面的预览框，或按 <kbd>Ctrl</kbd>+<kbd>V</kbd> 粘贴截图。iPhone 的 HEIC 请先在相册导出为 JPG。</p>
+
+        <div class="field">
+          <div class="label"><span>背景模式</span></div>
+          <div class="seg" id="bgMode" role="group" aria-label="背景模式">
+            <button type="button" data-mode="aurora" aria-pressed="true">流动极光</button>
+            <button type="button" data-mode="custom" aria-pressed="false">自定义图片</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label"><span>压暗 / 提亮</span><b id="scrimOut">32%</b></div>
+          <input id="scrim" type="range" min="0" max="80" step="1" aria-label="背景压暗或提亮">
+        </div>
+
+        <div class="field">
+          <div class="label"><span>背景虚化</span><b id="bgBlurOut">0px</b></div>
+          <input id="bgBlur" type="range" min="0" max="16" step="1" aria-label="背景虚化">
+        </div>
+
+        <p class="hint">图片保存在 <code>chrome.storage.local</code>，不会上传到任何服务器。裁剪后的宽度约 2560px。</p>
+      </section>
+
+      <section class="card" id="appearance">
+        <div class="card-head">
+          <h2>玻璃外观</h2>
+          <p>这些参数与页面右下角面板、工具栏弹窗实时同步。</p>
+        </div>
+
+        <div class="field">
+          <div class="label"><span>主题</span></div>
+          <div class="seg three" id="theme" role="group" aria-label="主题">
+            <button type="button" data-theme="auto" aria-pressed="true">自动</button>
+            <button type="button" data-theme="light" aria-pressed="false">浅色</button>
+            <button type="button" data-theme="dark" aria-pressed="false">深色</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label"><span>模糊强度</span><b id="blurOut">26px</b></div>
+          <input id="blur" type="range" min="0" max="48" step="1" aria-label="模糊强度">
+        </div>
+
+        <div class="field">
+          <div class="label"><span>玻璃通透</span><b id="alphaOut">46%</b></div>
+          <input id="alpha" type="range" min="10" max="80" step="1" aria-label="玻璃通透度">
+        </div>
+
+        <div class="row">
+          <div class="row-text"><span>鼠标跟随高光</span><small>卡片上跟随指针的光斑</small></div>
+          <label class="switch"><input id="specular" type="checkbox"><i></i></label>
+        </div>
+
+        <div class="row">
+          <div class="row-text"><span>启用效果</span><small>总开关，关闭后必应页面不加任何样式</small></div>
+          <label class="switch"><input id="enabled" type="checkbox"><i></i></label>
+        </div>
+      </section>
+
+      <section class="card soft">
+        <div class="card-head">
+          <h2>关于浏览器窗口与新标签页</h2>
+          <p>扩展无法给 Edge 的标题栏 / 工具栏加毛玻璃。插件会给页面写入 <code>theme-color</code>，在 Edge「设置 → 外观 → 在标题栏和工具栏上显示网站的主题色」开启后，标题栏会跟随页面的深 / 浅主色，看起来更连贯。Windows 11 的「透明效果」也能让窗口边框带一点亚克力质感。</p>
+          <p>新标签页由本扩展接管（Edge 不允许扩展给 <code>edge://newtab</code> 注入样式）。想恢复 Edge 原版：删除 <code>manifest.json</code> 里的 <code>chrome_url_overrides</code> 后重新加载，必应搜索页效果不受影响。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>设置自动保存 · 图片只存本机</span>
+      <a href="https://cn.bing.com/" target="_blank" rel="noopener">打开必应试试</a>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- 裁剪弹窗 -->
+  <div class="crop" id="cropModal" hidden>
+    <div class="crop-dialog" role="dialog" aria-modal="true" aria-label="裁剪背景">
+      <div class="crop-head">
+        <div>
+          <h2>裁剪背景</h2>
+          <p>拖动图片调整位置，滚轮或滑杆缩放</p>
+        </div>
+        <button class="icon-btn" id="cropClose" type="button" aria-label="关闭">×</button>
+      </div>
+
+      <div class="crop-stage-wrap">
+        <div class="crop-stage" id="stage">
+          <img id="cropImg" alt="" draggable="false">
+          <span class="crop-grid" aria-hidden="true"></span>
+        </div>
+
+        <div class="crop-loading" id="cropLoading">
+          <span class="spinner" aria-hidden="true"></span>
+          <b>正在读取图片…</b>
+          <small>大图可能需要几秒钟</small>
+        </div>
+
+        <div class="crop-error" id="cropError" hidden>
+          <b>图片无法打开</b>
+          <p id="cropErrorText"></p>
+          <button class="btn" id="cropErrorClose" type="button">关闭</button>
+        </div>
+      </div>
+
+      <div class="crop-tools">
+        <span>缩放 <b id="zoomOut">100%</b></span>
+        <input id="zoom" type="range" min="100" max="300" value="100" aria-label="缩放">
+        <button class="btn" id="reset" type="button">重置</button>
+      </div>
+
+      <div class="crop-foot">
+        <span class="hint" id="cropInfo"></span>
+        <div class="actions">
+          <button class="btn" id="cancel" type="button">取消</button>
+          <button class="btn primary" id="apply" type="button">使用这张</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input id="file" type="file" accept="image/*,.jpg,.jpeg,.png,.webp,.gif,.bmp,.avif" hidden>
+
+  <script src="src/settings.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
