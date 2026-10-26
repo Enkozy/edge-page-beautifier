@@ -572,7 +572,7 @@
   `;
 
   var HUD_HTML = `
-  <button class="lg-fab" id="lg-fab" type="button" aria-label="液态玻璃设置" aria-expanded="false" title="液态玻璃设置（Alt+G）">
+  <button class="lg-fab" id="lg-fab" type="button" aria-label="页面美化设置" aria-expanded="false" title="页面美化设置（Alt+G）">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <defs>
         <linearGradient id="lgDrop" x1="4" y1="2" x2="20" y2="22" gradientUnits="userSpaceOnUse">
@@ -591,9 +591,9 @@
     </svg>
   </button>
 
-  <div class="lg-panel" id="lg-panel" role="dialog" aria-label="液态玻璃设置" hidden>
+  <div class="lg-panel" id="lg-panel" role="dialog" aria-label="页面美化设置" hidden>
     <div class="lg-head">
-      <div class="lg-brand"><i></i>液态玻璃</div>
+      <div class="lg-brand"><i></i>Edge 页面美化</div>
       <span class="lg-ver" id="lg-ver"></span>
       <button class="lg-x" id="lg-close" type="button" aria-label="关闭">×</button>
     </div>

@@ -1,10 +1,14 @@
-# 必应液态玻璃 · Bing Liquid Glass
+# Edge 页面美化 · 液态玻璃
+
+**Edge Page Beautifier · Liquid Glass**
+
+> 原名「必应液态玻璃 · Bing Liquid Glass」，v1.2.0 起更名为「Edge 页面美化 · 液态玻璃」，GitHub 仓库改为 `edge-page-beautifier`。
 
 给 **Edge 必应搜索页 / 新标签页** 换上一层液态玻璃：磨砂卡片、流动极光、跟随指针的高光，还可以换成自己裁剪的图片背景。
 
 Manifest V3，无需构建，直接加载。
 
-[**⬇ 下载最新版**](https://github.com/Enkozy/bing-liquid-glass/releases/latest) · [问题反馈](https://github.com/Enkozy/bing-liquid-glass/issues) · [隐私说明](PRIVACY.md)
+[**⬇ 下载最新版**](https://github.com/Enkozy/edge-page-beautifier/releases/latest) · [问题反馈](https://github.com/Enkozy/edge-page-beautifier/issues) · [隐私说明](PRIVACY.md)
 
 ![图标](icons/icon128.png)
 
@@ -29,14 +33,14 @@ Manifest V3，无需构建，直接加载。
 
 ## 下载安装
 
-1. 从 [Releases](https://github.com/Enkozy/bing-liquid-glass/releases/latest) 下载 `bing-liquid-glass-v1.1.5.zip`。
-2. 解压到一个固定文件夹，例如 `D:\Extensions\bing-liquid-glass-v1.1.5`。
+1. 从 [Releases](https://github.com/Enkozy/edge-page-beautifier/releases/latest) 下载 `edge-page-beautifier-v1.2.0.zip`。
+2. 解压到一个固定文件夹，例如 `D:\Extensions\edge-page-beautifier-v1.2.0`。
    > 不要直接在压缩包里运行；装好后不要删除或移动这个文件夹。
 3. 打开 Edge，地址栏输入 `edge://extensions/`。
 4. 打开左下角的 **开发人员模式**。
-5. 点 **加载解压缩的扩展**，选择解压后的 `bing-liquid-glass-v1.1.5` 文件夹。
+5. 点 **加载解压缩的扩展**，选择解压后的 `edge-page-beautifier-v1.2.0` 文件夹。
    文件夹里应该能直接看到 `manifest.json`，不要选它的上一层。
-6. 建议点扩展栏的拼图图标，把「必应液态玻璃」固定到工具栏。
+6. 建议点扩展栏的拼图图标，把「Edge 页面美化」固定到工具栏。
 7. 打开 [cn.bing.com](https://cn.bing.com/) 搜索，或按 `Ctrl+T` 看新标签页。
 
 > Edge 可能会提示「请关闭开发人员模式扩展」。点 **保留 / 启用**，不要点移除。重启 Edge 后如果扩展被禁用，回 `edge://extensions/` 重新打开即可。
@@ -93,10 +97,10 @@ Manifest V3，无需构建，直接加载。
 关掉旧的新标签页，按 `Ctrl+T` 重开。若装了其他新标签页扩展，它们会冲突，只能保留一个。
 
 **快捷网站图标是字母？**
-说明那个站点根目录没有可访问的 favicon。欢迎提 [Issue](https://github.com/Enkozy/bing-liquid-glass/issues) 并附上域名。
+说明那个站点根目录没有可访问的 favicon。欢迎提 [Issue](https://github.com/Enkozy/edge-page-beautifier/issues) 并附上域名。
 
 **上传图片没反应？**
-- 确认扩展版本是 1.1.5，并且在 `edge://extensions/` 点过「重新加载」；
+- 确认扩展版本是 1.2.0，并且在 `edge://extensions/` 点过「重新加载」；
 - 选图后要等裁剪框出现，再点 **使用这张**；
 - HEIC 先转 JPG；
 - 设置页会显示红色错误原因。
@@ -120,7 +124,7 @@ Edge 默认禁止扩展在隐私窗口运行。到扩展「详细信息」里打
 仓库根目录就是扩展目录，没有构建步骤：
 
 ```bash
-git clone https://github.com/Enkozy/bing-liquid-glass.git
+git clone https://github.com/Enkozy/edge-page-beautifier.git
 ```
 
 然后 `edge://extensions/` → 开发人员模式 → 加载解压缩的扩展 → 选这个目录。

@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "必应液态玻璃 · Bing Liquid Glass",
-  "short_name": "必应液态玻璃",
-  "version": "1.1.5",
-  "description": "把 Edge 必应搜索页和新标签页变成液态玻璃：磨砂卡片、流动极光、可裁剪自定义背景，支持深浅主题。",
+  "name": "Edge 页面美化 · 液态玻璃",
+  "short_name": "Edge页面美化",
+  "version": "1.2.0",
+  "description": "Edge 页面美化：给必应搜索页和新标签页换上液态玻璃、流动极光和自定义背景（Manifest V3 扩展）。",
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",
@@ -27,7 +27,7 @@
     "newtab": "newtab.html"
   },
   "action": {
-    "default_title": "必应液态玻璃",
+    "default_title": "Edge 页面美化",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0
+
+- 更名为「Edge 页面美化 · 液态玻璃」，GitHub 仓库改为 `edge-page-beautifier`
+- 扩展名、短名称、设置页、新标签页、页面面板标题同步更新
+- 功能与 1.1.5 相同
+
 ## 1.1.5
 
 - 修复新标签页 favicon 一直是字母：移除 `loading="lazy"` + `display:none` 死锁，改为插入 DOM 后再加载、`opacity` 淡入

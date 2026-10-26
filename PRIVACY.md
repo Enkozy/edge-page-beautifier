@@ -1,6 +1,6 @@
-# 隐私说明
+# 隐私说明 · Edge 页面美化
 
-必应液态玻璃（Bing Liquid Glass）不收集、不上传任何个人数据。没有账号系统、没有统计脚本、没有远程服务器。
+Edge 页面美化（Edge Page Beautifier）不收集、不上传任何个人数据。没有账号系统、没有统计脚本、没有远程服务器。
 
 ## 数据存在哪里
 
@@ -30,4 +30,4 @@
 
 ## 联系
 
-有问题请提 Issue：<https://github.com/Enkozy/bing-liquid-glass/issues>
+有问题请提 Issue：<https://github.com/Enkozy/edge-page-beautifier/issues>
