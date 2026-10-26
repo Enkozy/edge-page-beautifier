@@ -81,6 +81,7 @@
     HTML.dataset.lgBg = customBg ? 'custom' : 'aurora';
     HTML.style.setProperty('--lg-blur', cfg.blur + 'px');
     HTML.style.setProperty('--lg-a', (cfg.alpha / 100).toFixed(3));
+    HTML.style.setProperty('--lg-contrast', String(cfg.contrast));
     HTML.style.setProperty('--lg-scrim', (cfg.bgScrim / 100).toFixed(2));
     HTML.style.setProperty('--lg-bg-blur', cfg.bgBlur + 'px');
     if (!cfg.enabled || !cfg.specular) clearSpecular();
@@ -622,6 +623,11 @@
       <input type="range" id="lg-alpha" min="10" max="80" step="1" aria-label="玻璃通透度">
     </div>
 
+    <div class="lg-field">
+      <div class="lg-label"><span>文字对比度</span><b id="lg-contrast-out">50%</b></div>
+      <input type="range" id="lg-contrast" min="0" max="100" step="1" aria-label="文字对比度">
+    </div>
+
     <div class="lg-row">
       <span>鼠标高光</span>
       <label class="lg-switch"><input type="checkbox" id="lg-specular"><i></i></label>
@@ -677,15 +683,17 @@
       enabled: shadow.getElementById('lg-enabled'),
       blur: shadow.getElementById('lg-blur'),
       alpha: shadow.getElementById('lg-alpha'),
+      contrast: shadow.getElementById('lg-contrast'),
       blurOut: shadow.getElementById('lg-blur-out'),
       alphaOut: shadow.getElementById('lg-alpha-out'),
+      contrastOut: shadow.getElementById('lg-contrast-out'),
       specular: shadow.getElementById('lg-specular'),
       themeGroup: shadow.getElementById('lg-theme')
     };
 
     fab.addEventListener('click', function () { setPanel(!panelOpen, false); });
     shadow.getElementById('lg-close').addEventListener('click', function () { setPanel(false, true); });
-    shadow.getElementById('lg-reset').addEventListener('click', function () { commit({ enabled: true, theme: 'auto', blur: 26, alpha: 46, specular: true }); });
+    shadow.getElementById('lg-reset').addEventListener('click', function () { commit({ enabled: true, theme: 'auto', blur: 26, alpha: 46, contrast: 50, specular: true }); });
 
     ui.enabled.addEventListener('change', function (e) { commit({ enabled: !!e.target.checked }); });
     ui.specular.addEventListener('change', function (e) { commit({ specular: !!e.target.checked }); });
@@ -708,6 +716,14 @@
       apply();
     });
     ui.alpha.addEventListener('change', function () { saveCfg(); });
+
+    ui.contrast.addEventListener('input', function (e) {
+      cfg.contrast = parseInt(e.target.value, 10) || 0;
+      ui.contrastOut.textContent = cfg.contrast + '%';
+      setRangeFill(e.target);
+      apply();
+    });
+    ui.contrast.addEventListener('change', function () { saveCfg(); });
 
     Array.prototype.forEach.call(ui.themeGroup.querySelectorAll('button'), function (btn) {
       btn.addEventListener('click', function () { commit({ theme: btn.getAttribute('data-theme') }); });
@@ -742,11 +758,14 @@
 
     if (focused !== ui.blur) ui.blur.value = String(cfg.blur);
     if (focused !== ui.alpha) ui.alpha.value = String(cfg.alpha);
+    if (focused !== ui.contrast) ui.contrast.value = String(cfg.contrast);
 
     ui.blurOut.textContent = cfg.blur + 'px';
     ui.alphaOut.textContent = cfg.alpha + '%';
+    ui.contrastOut.textContent = cfg.contrast + '%';
     setRangeFill(ui.blur);
     setRangeFill(ui.alpha);
+    setRangeFill(ui.contrast);
 
     Array.prototype.forEach.call(ui.themeGroup.querySelectorAll('button'), function (btn) {
       btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme') === cfg.theme));

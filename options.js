@@ -50,15 +50,17 @@
 
     if (document.activeElement !== $('blur')) $('blur').value = String(cfg.blur);
     if (document.activeElement !== $('alpha')) $('alpha').value = String(cfg.alpha);
+    if (document.activeElement !== $('contrast')) $('contrast').value = String(cfg.contrast);
     if (document.activeElement !== $('scrim')) $('scrim').value = String(cfg.bgScrim);
     if (document.activeElement !== $('bgBlur')) $('bgBlur').value = String(cfg.bgBlur);
 
     $('blurOut').textContent = cfg.blur + 'px';
     $('alphaOut').textContent = cfg.alpha + '%';
+    $('contrastOut').textContent = cfg.contrast + '%';
     $('scrimOut').textContent = cfg.bgScrim + '%';
     $('bgBlurOut').textContent = cfg.bgBlur + 'px';
 
-    ['blur', 'alpha', 'scrim', 'bgBlur'].forEach(function (id) { setFill($(id)); });
+    ['blur', 'alpha', 'contrast', 'scrim', 'bgBlur'].forEach(function (id) { setFill($(id)); });
 
     Array.prototype.forEach.call($('theme').querySelectorAll('button'), function (btn) {
       btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme') === cfg.theme));
@@ -159,6 +161,14 @@
       scheduleSave();
     });
     $('alpha').addEventListener('change', saveNow);
+
+    $('contrast').addEventListener('input', function () {
+      cfg.contrast = parseInt($('contrast').value, 10) || 0;
+      $('contrastOut').textContent = cfg.contrast + '%';
+      setFill($('contrast'));
+      scheduleSave();
+    });
+    $('contrast').addEventListener('change', saveNow);
 
     $('scrim').addEventListener('input', function () {
       cfg.bgScrim = parseInt($('scrim').value, 10) || 0;

@@ -25,6 +25,7 @@ Manifest V3，无需构建，直接加载。
 | 右侧栏 / 分页 / 页脚 / 搜索建议 | 同步玻璃化 |
 | 深色主题 | 站点名、面包屑、栏目名、相关搜索等深色文字会转成浅色 |
 | 新标签页 | 必应壁纸 / 自定义背景 + 玻璃搜索框 + 快捷网站 + 时钟 |
+| 文字对比度 | 0–100 可调：提高卡片不透明度，并给文字加一层同色光晕 |
 | 鼠标高光 | 可选，光斑跟随指针在卡片上移动 |
 
 主题支持 **自动 / 浅色 / 深色**；模糊、通透、背景压暗、虚化都能实时调。
@@ -33,12 +34,12 @@ Manifest V3，无需构建，直接加载。
 
 ## 下载安装
 
-1. 从 [Releases](https://github.com/Enkozy/edge-page-beautifier/releases/latest) 下载 `edge-page-beautifier-v1.2.0.zip`。
-2. 解压到一个固定文件夹，例如 `D:\Extensions\edge-page-beautifier-v1.2.0`。
+1. 从 [Releases](https://github.com/Enkozy/edge-page-beautifier/releases/latest) 下载 `edge-page-beautifier-v1.2.1.zip`。
+2. 解压到一个固定文件夹，例如 `D:\Extensions\edge-page-beautifier-v1.2.1`。
    > 不要直接在压缩包里运行；装好后不要删除或移动这个文件夹。
 3. 打开 Edge，地址栏输入 `edge://extensions/`。
 4. 打开左下角的 **开发人员模式**。
-5. 点 **加载解压缩的扩展**，选择解压后的 `edge-page-beautifier-v1.2.0` 文件夹。
+5. 点 **加载解压缩的扩展**，选择解压后的 `edge-page-beautifier-v1.2.1` 文件夹。
    文件夹里应该能直接看到 `manifest.json`，不要选它的上一层。
 6. 建议点扩展栏的拼图图标，把「Edge 页面美化」固定到工具栏。
 7. 打开 [cn.bing.com](https://cn.bing.com/) 搜索，或按 `Ctrl+T` 看新标签页。
@@ -100,7 +101,7 @@ Manifest V3，无需构建，直接加载。
 说明那个站点根目录没有可访问的 favicon。欢迎提 [Issue](https://github.com/Enkozy/edge-page-beautifier/issues) 并附上域名。
 
 **上传图片没反应？**
-- 确认扩展版本是 1.2.0，并且在 `edge://extensions/` 点过「重新加载」；
+- 确认扩展版本是 1.2.1，并且在 `edge://extensions/` 点过「重新加载」；
 - 选图后要等裁剪框出现，再点 **使用这张**；
 - HEIC 先转 JPG；
 - 设置页会显示红色错误原因。

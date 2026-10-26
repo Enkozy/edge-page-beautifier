@@ -14,6 +14,7 @@
     theme: 'auto',   // auto | light | dark
     blur: 26,        // 模糊强度 px (0-48)
     alpha: 46,       // 玻璃通透度 % (10-80)
+    contrast: 50,    // 文字对比度 % (0-100)
     specular: true,  // 鼠标跟随高光
     bgMode: 'aurora',// aurora | custom
     bgScrim: 32,     // 背景压暗/提亮 % (0-80)
@@ -33,6 +34,7 @@
     out.theme = (src.theme === 'light' || src.theme === 'dark') ? src.theme : 'auto';
     out.blur = clampInt(src.blur, 0, 48, DEFAULTS.blur);
     out.alpha = clampInt(src.alpha, 10, 80, DEFAULTS.alpha);
+    out.contrast = clampInt(src.contrast, 0, 100, DEFAULTS.contrast);
     out.specular = src.specular !== false;
     out.bgMode = src.bgMode === 'custom' ? 'custom' : 'aurora';
     out.bgScrim = clampInt(src.bgScrim, 0, 80, DEFAULTS.bgScrim);

@@ -20,6 +20,7 @@
   function init(cfg) {
     var blur = $('blur');
     var alpha = $('alpha');
+    var contrast = $('contrast');
     var saveTimer = 0;
     var touched = false;
 
@@ -28,10 +29,13 @@
       $('specular').checked = !!cfg.specular;
       if (document.activeElement !== blur) blur.value = String(cfg.blur);
       if (document.activeElement !== alpha) alpha.value = String(cfg.alpha);
+      if (document.activeElement !== contrast) contrast.value = String(cfg.contrast);
       $('blurOut').textContent = cfg.blur + 'px';
       $('alphaOut').textContent = cfg.alpha + '%';
+      $('contrastOut').textContent = cfg.contrast + '%';
       setFill(blur);
       setFill(alpha);
+      setFill(contrast);
       Array.prototype.forEach.call(document.querySelectorAll('#theme button'), function (btn) {
         btn.setAttribute('aria-pressed', String(btn.getAttribute('data-theme') === cfg.theme));
       });
@@ -74,15 +78,24 @@
       scheduleSave();
     });
 
+    contrast.addEventListener('input', function () {
+      touched = true;
+      cfg.contrast = parseInt(contrast.value, 10) || 0;
+      $('contrastOut').textContent = cfg.contrast + '%';
+      setFill(contrast);
+      scheduleSave();
+    });
+
     blur.addEventListener('change', saveNow);
     alpha.addEventListener('change', saveNow);
+    contrast.addEventListener('change', saveNow);
 
     Array.prototype.forEach.call(document.querySelectorAll('#theme button'), function (btn) {
       btn.addEventListener('click', function () { commit({ theme: btn.getAttribute('data-theme') }); });
     });
 
     $('reset').addEventListener('click', function () {
-      commit({ enabled: true, theme: 'auto', blur: 26, alpha: 46, specular: true });
+      commit({ enabled: true, theme: 'auto', blur: 26, alpha: 46, contrast: 50, specular: true });
     });
 
     $('more').addEventListener('click', function () {
