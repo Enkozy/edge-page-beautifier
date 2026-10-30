@@ -1,0 +1,18 @@
+{
+  "extensionName": {
+    "message": "Edge Page Beautifier · Liquid Glass",
+    "description": "Extension name shown in the browser and store"
+  },
+  "extensionDescription": {
+    "message": "A liquid-glass theme for Bing search and the Edge new tab, with aurora, custom backgrounds and local quick links.",
+    "description": "Short store description"
+  },
+  "name": {
+    "message": "Edge Page Beautifier · Liquid Glass",
+    "description": "Alias used by some store locale detectors"
+  },
+  "description": {
+    "message": "A liquid-glass theme for Bing search and the Edge new tab, with aurora, custom backgrounds and local quick links.",
+    "description": "Alias used by some store locale detectors"
+  }
+}

@@ -13,7 +13,8 @@
   };
 
   var customBg = '';
-  var wallLoading = false;
+  var wallSeq = 0;
+  var wallRetryTimer = 0;
   var addOpen = false;
   var sites = [];
 
@@ -64,15 +65,39 @@
   /* ------------------------------------------------------------------ */
   /* 背景                                                               */
   /* ------------------------------------------------------------------ */
-  function setPhoto(url) {
+  function setPhoto(url, token, opts) {
+    opts = opts || {};
+    if (!url || token !== wallSeq) return;
     var photo = $('photo');
     var img = new Image();
-    img.onload = function () {
+    var settled = false;
+
+    function finish() {
+      if (settled || token !== wallSeq) return;
+      settled = true;
       photo.style.backgroundImage = 'url("' + url + '")';
       root.dataset.bg = 'photo';
-    };
-    img.onerror = function () { root.dataset.bg = 'aurora'; };
+      $('wallInfo').textContent = opts.label || '必应每日壁纸';
+    }
+
+    function fail() {
+      if (settled || token !== wallSeq) return;
+      settled = true;
+      root.dataset.bg = 'aurora';
+      $('wallInfo').textContent = opts.custom ? '自定义背景不可用' : '流动极光';
+      if (opts.custom) return;
+      if (opts.fromCache) {
+        try { window.localStorage.removeItem('lgNtpWall'); } catch (e) { /* ignore */ }
+        loadWallpaper(false, true);
+      } else if (!opts.retried) {
+        loadWallpaper(false, true);
+      }
+    }
+
+    img.onload = finish;
+    img.onerror = fail;
     img.src = url;
+    if (img.complete && img.naturalWidth > 0) finish();
   }
 
   function dayKey() {
@@ -80,29 +105,30 @@
     return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
   }
 
-  function useCustomBg() {
+  function useCustomBg(token) {
     if (cfg.bgMode === 'custom' && customBg) {
-      setPhoto(customBg);
       $('wallInfo').textContent = '自定义背景';
       $('refresh').hidden = true;
+      setPhoto(customBg, token, { custom: true, label: '自定义背景' });
       return true;
     }
     return false;
   }
 
-  function loadWallpaper(force) {
-    if (useCustomBg()) return;
+  function loadWallpaper(force, retried) {
+    window.clearTimeout(wallRetryTimer);
+    var token = ++wallSeq;
+    if (useCustomBg(token)) return;
+
     $('refresh').hidden = false;
     $('wallInfo').textContent = '必应每日壁纸';
 
     var cache = null;
     try { cache = JSON.parse(window.localStorage.getItem('lgNtpWall') || 'null'); } catch (e) { cache = null; }
     if (!force && cache && cache.date === dayKey() && cache.url) {
-      setPhoto(cache.url);
+      setPhoto(cache.url, token, { fromCache: true, retried: !!retried, label: '必应每日壁纸' });
       return;
     }
-    if (wallLoading) return;
-    wallLoading = true;
 
     root.dataset.bg = 'aurora';
     var idx = force ? Math.floor(Math.random() * 8) : 0;
@@ -113,19 +139,28 @@
         return res.json();
       })
       .then(function (json) {
+        if (token !== wallSeq) return;
         var image = json && json.images && json.images[0];
         if (!image || !image.url) throw new Error('empty');
         var url = 'https://cn.bing.com' + image.url;
         if (!force) {
           try { window.localStorage.setItem('lgNtpWall', JSON.stringify({ date: dayKey(), url: url })); } catch (e) { /* ignore */ }
         }
-        setPhoto(url);
+        setPhoto(url, token, { fromCache: false, retried: !!retried, label: '必应每日壁纸' });
       })
       .catch(function () {
+        if (token !== wallSeq) return;
+        if (cache && cache.url) {
+          setPhoto(cache.url, token, { fromCache: true, retried: true, label: '必应每日壁纸（缓存）' });
+          return;
+        }
+        if (!retried) {
+          wallRetryTimer = window.setTimeout(function () { loadWallpaper(false, true); }, 800);
+          return;
+        }
         root.dataset.bg = 'aurora';
         $('wallInfo').textContent = '流动极光';
-      })
-      .then(function () { wallLoading = false; });
+      });
   }
 
   /* ------------------------------------------------------------------ */
@@ -422,9 +457,9 @@
     tick();
     window.setInterval(tick, 15000);
 
+    root.dataset.bg = 'aurora';
     applyTheme();
     applyGlass();
-    loadWallpaper(false);
     bindSites();
 
     $('searchForm').addEventListener('submit', function (e) {
@@ -461,15 +496,23 @@
       if (mq.addEventListener) mq.addEventListener('change', function () { if (cfg.theme === 'auto') applyTheme(); });
     } catch (e) { /* ignore */ }
 
-    if (!S) return;
+    if (!S) { loadWallpaper(false); return; }
+
+    var bootTimer = window.setTimeout(function () { loadWallpaper(false); }, 2500);
 
     Promise.all([S.load(), S.getBackground()]).then(function (result) {
+      window.clearTimeout(bootTimer);
       cfg = result[0];
       customBg = result[1] || '';
       if (cfg.bgMode === 'custom' && !customBg) {
         cfg.bgMode = 'aurora';
         S.save(cfg);
       }
+      applyTheme();
+      applyGlass();
+      loadWallpaper(false);
+    }).catch(function () {
+      window.clearTimeout(bootTimer);
       applyTheme();
       applyGlass();
       loadWallpaper(false);

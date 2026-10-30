@@ -1,0 +1,18 @@
+{
+  "extensionName": {
+    "message": "Edge 页面美化 · 液态玻璃",
+    "description": "Extension name shown in the browser and store"
+  },
+  "extensionDescription": {
+    "message": "Edge 页面美化：给必应搜索页和新标签页换上液态玻璃、流动极光和自定义背景（Manifest V3 扩展）。",
+    "description": "Short store description"
+  },
+  "name": {
+    "message": "Edge 页面美化 · 液态玻璃",
+    "description": "Alias used by some store locale detectors"
+  },
+  "description": {
+    "message": "Edge 页面美化：给必应搜索页和新标签页换上液态玻璃、流动极光和自定义背景（Manifest V3 扩展）。",
+    "description": "Alias used by some store locale detectors"
+  }
+}
